@@ -1,0 +1,28 @@
+void del()
+{
+    struct node *pretemp,*temp;
+    char *primeiroNome,*ultimoNome;
+    temp=start;
+    pretemp=start->next;
+    printf("nome :");
+    scanf("%s",&primeiroNome);
+    printf("apelido :");
+    scanf("%s",&ultimoNome);
+    while(temp!=NULL)
+    {
+        // if primeiro nome == temp, ultimo nome == temp, id == temp
+        {
+            printf("%s ",temp->firstname);
+            printf("%s ",temp->lastname);
+            printf("%s ",temp->number);
+            temp->next=pretemp->next;
+            free(pretemp);
+            break;
+        }
+        else
+        {
+            temp=temp->next;
+            pretemp=pretemp->next;
+        }
+    }
+}
