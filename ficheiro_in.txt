@@ -1,10 +1,20 @@
-Adriana Bernardo 50
-Alexandre Brás 75
-Anderson Curva 45
-Anibal Rodrigues 75
-Carlos Jordão 50
-David Leitão 50
-Esmaail Cabrão 50
-Fábio Vaqueiro 394
-Gabriel Rodrigues 0
-Francisco Carreira 42
+1
+Adriana Bernardo
+1
+Alexandre Brás
+1
+Anderson Curva
+1
+Anibal Rodrigues
+1
+Carlos Jordão
+1
+David Leitão
+1
+Esmaail Cabrão
+1
+Fábio Vaqueiro
+1
+Gabriel Rodrigues
+1
+Francisco Carreira
