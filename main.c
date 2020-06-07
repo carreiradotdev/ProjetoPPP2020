@@ -60,7 +60,11 @@ void menu_remove_socio(){
 }
 
 void menu_add_paga(){
-
+    pagemento* s = calloc(sizeof(montante),1); // isto não faz sentido?
+    printf("Montante Pago:\n");
+    scanf("%s", s->montante);
+    s->id = id++;
+    inserir_lista_pagamentos(ls, s);
 }
 
 void menu_edit_paga(){
