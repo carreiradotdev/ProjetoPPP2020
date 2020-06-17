@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define STRSIZE 50
 
 typedef struct socio{
-    char nome[50];
-    char apelido[50];
+    char nome[STRSIZE];
+    char apelido[STRSIZE];
     int id;
 }socio;
 
@@ -84,14 +87,26 @@ lista_socios menu_add_socio(lista_socios ls){
     return ls;
 }
 
-void menu_edit_socio(){
-
+void menu_edit_socio(lista_socios ls){
+    lista_socios edit;
+    int id;
+    char string[STRSIZE];
+    printf("ID de sócio: ");
+    scanf("%d^[\n]", &id);
+    for (edit = ls; edit != NULL && edit->info_socio->id != id;edit = edit->next);
+    printf("\nNome: %s\nApelido: %s\n", edit->info_socio->nome, edit->info_socio->apelido);
+    printf("Novo nome: ");
+    scanf("%s^[\n]", string);
+    strcpy(edit->info_socio->nome, string);
+    printf("Novo apelido: ");
+    scanf("%s^[\n]", string);
+    strcpy(edit->info_socio->apelido, string);
 }
 
 lista_socios menu_remove_socio(lista_socios ls) {
     int id;
     printf("id :");
-    scanf("%d",&id);
+    scanf("%d\n",&id);
     ls = remove_lista_socios(ls, id);
     return ls;
 }
@@ -134,9 +149,9 @@ lista_socios read_from_file(){
     return lista;
 }
 
-int main(int argc, char *argv[]) {
+int main(void) {
     int opcao = 0;
-    lista_socios ls;
+    lista_socios ls = NULL;
 
     while (opcao != 4){
         printf("1 - adicionar socio\n");
@@ -154,7 +169,7 @@ int main(int argc, char *argv[]) {
                 ls = menu_add_socio(ls);
                 break;
             case 2:
-                menu_edit_socio();
+                menu_edit_socio(ls);
                 break;
             case 3:
                 ls = menu_remove_socio(ls);
