@@ -71,6 +71,31 @@ lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p){
     }
 }
 
+lista_socios remove_lista_socios(lista_socios lista, int id_to_remove){
+    lista_socios inicio = lista;
+    lista_socios seguinte;
+    //remover primeiro no
+    if(lista != NULL && lista->info_socio->id == id_to_remove){
+        seguinte = lista->next;
+        free(lista->info_socio);
+        free(lista);
+        return seguinte;
+    }
+    //remover outro no
+    while(lista->next != NULL && lista->next->info_socio->id != id_to_remove){
+        lista = lista->next;
+    }
+    if(lista->next == NULL){
+        fprintf(stderr, "Id nao encontrado\n");
+    }else{
+        seguinte = lista->next->next;
+        free(lista->next->info_socio);
+        free(lista->next);
+        lista->next = seguinte;
+    }
+    return inicio;
+}
+
 lista_socios menu_add_socio(lista_socios ls){
     socio* s = calloc(sizeof(socio),1);
     printf("nome:\n");
