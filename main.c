@@ -48,14 +48,14 @@ lista_socios inserir_lista_socios(lista_socios lista, socio* s){
     lista_socios novo_no = calloc(sizeof(struct _lista_socios), 1);
     novo_no->info_socio = s;
     if(lista == NULL){
-        return novo_no;
+        novo_no->next = novo_no;
     }else{
-        while(lista->next != NULL)
-            lista = lista->next;
+        novo_no->next = lista->next;
         lista->next = novo_no;
-        return inicio;
     }
+    return novo_no;
 }
+
 
 lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p){
     lista_pagamentos inicio = lista;
@@ -70,6 +70,7 @@ lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p){
         return inicio;
     }
 }
+
 
 lista_socios remove_lista_socios(lista_socios lista, int id_to_remove){
     lista_socios inicio = lista;
@@ -95,6 +96,7 @@ lista_socios remove_lista_socios(lista_socios lista, int id_to_remove){
     }
     return inicio;
 }
+
 
 lista_socios menu_add_socio(lista_socios ls){
     socio* s = calloc(sizeof(socio),1);
@@ -131,12 +133,13 @@ lista_socios menu_remove_socio(lista_socios ls) {
     return ls;
 }
 
-void menu_add_paga(){
+lista_pagamentos menu_add_paga(lista_pagamentos lp){
     pagamento* p = calloc(sizeof(pagamento),1);
     printf("Montante Pago:\n");
     scanf("%d", p->montante);
     p->id = id++;
     inserir_lista_paga(lp, p);
+    return lp;
 }
 
 void menu_edit_paga(lista_pagamentos lp){
@@ -184,10 +187,8 @@ int main(void) {
 
     while (opcao != 4){
         printf("1 - adicionar socio\n");
-        printf("2 - editar socio\n");
         printf("3 - remover socio\n");
         printf("4 - adicionar pagamento\n");
-        printf("5 - editar pagamento\n");
         printf("6 - remover pagamento\n");
         printf("7 - imprimir socio\n");
         printf("8 - imprimir pagamentos")
@@ -208,10 +209,10 @@ int main(void) {
                 lp = menu_add_paga(lp);
                 break;
             case 5:
-                menu_edit_paga();
+                menu_edit_paga(lp);
                 break;
             case 6:
-                menu_remove_paga();
+                menu_remove_paga(lp);
                 break;
             case 7:
                 print_socios(ls);
