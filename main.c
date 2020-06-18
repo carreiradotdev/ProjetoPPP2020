@@ -143,18 +143,46 @@ lista_pagamentos menu_add_paga(lista_pagamentos lp){
 void menu_edit_paga(lista_pagamentos lp) {
     lista_pagamentos edit;
     int id;
-    char string[STRSIZE];
     printf("ID de sócio: ");
     scanf("%d^[\n]", &id);
     for (edit = lp; edit != NULL && edit->info_pagamento->id != id; edit = edit->next);
     printf("\nMontante: %d\n", edit->info_pagamento->montante);
     printf("Novo montante: ");
-    scanf("%s^[\n]", &(edit->info_pagamento->montante));
+    scanf("%d^[\n]", &(edit->info_pagamento->montante));
 }
 
-/* void menu_remove_paga() {
+lista_pagamentos remove_lista_paga(lista_pagamentos lista, int id_to_remove) {
+    lista_pagamentos inicio = lista;
+    lista_pagamentos seguinte;
+    //remover primeiro no
+    if(lista != NULL && lista->info_pagamento->id == id_to_remove){
+        seguinte = lista->next;
+        free(lista->info_pagamento);
+        free(lista);
+        return seguinte;
+    }
+    while(lista->next != NULL && lista->next->info_pagamento->id != id_to_remove){
+        lista = lista->next;
+    }
+    if(lista->next == NULL){
+        fprintf(stderr, "Id nao encontrado\n");
+    }else{
+        seguinte = lista->next->next;
+        free(lista->next->info_pagamento);
+        free(lista->next);
+        lista->next = seguinte;
+    }
+    return inicio;
+}
 
-}*/
+lista_pagamentos menu_remove_paga(lista_pagamentos lp) {
+    int id;
+    printf("id :");
+    scanf("%d\n",&id);
+    lp = remove_lista_paga(lp, id);
+    return lp;
+}
+
 
 void write_to_file_socios(lista_socios lista){
     FILE *f = fopen("ficheiro_in_socios", "wb");
@@ -176,6 +204,21 @@ lista_socios read_from_file_socios() {
     }
     fclose(f);
     return lista;
+}
+
+void output(lista_socios listasoc, lista_pagamentos listapag) {
+    printf("Qual o nome do Ficheiro de Output? ");
+    scanf("%s\n",&nome);
+    FILE *f = fopen(nome, "w+");
+    char str[] = "NOME # APELIDO #
+    fwrite("")
+    while(listasoc != NULL){
+
+
+
+    }
+
+
 }
 
 int main(void) {
@@ -212,6 +255,7 @@ int main(void) {
                 menu_edit_paga(lp);
                 break;
             case 6:
+                lp = menu_remove_paga(lp);
                 break;
             case 7:
                 print_socios(ls);
@@ -225,6 +269,8 @@ int main(void) {
             case 10:
                 ls = read_from_file_socios();
                 break;
+            case 11:
+                output()
             default:
                 break;
         }
