@@ -178,7 +178,7 @@ lista_pagamentos remove_lista_paga(lista_pagamentos lista, int id_to_remove) {
 lista_pagamentos menu_remove_paga(lista_pagamentos lp) {
     int id;
     printf("id :");
-    scanf("%d\n",&id);
+    scanf("%d^[\n]", &id);
     lp = remove_lista_paga(lp, id);
     return lp;
 }
@@ -206,19 +206,19 @@ lista_socios read_from_file_socios() {
     return lista;
 }
 
-void output(lista_socios listasoc, lista_pagamentos listapag) {
+// cap é a quantia das quotas a serem pagas
+void output(lista_socios listasoc, lista_pagamentos listapag, int cap) {
     printf("Qual o nome do Ficheiro de Output? ");
-    scanf("%s\n",&nome);
-    FILE *f = fopen(nome, "w+");
-    char str[] = "NOME # APELIDO #
-    fwrite("")
-    while(listasoc != NULL){
-
-
-
-    }
-
-
+    char nome[STRSIZE];
+    scanf("%s\n",nome);
+    FILE *fp = fopen(nome, "w+");
+    fprintf(fp, "## Sócios com quotas em dívida ##\n");
+    /* Percorrer listas e imprimir no ficheiro
+        if montante < cap -> procurar o nome do id e 
+        printf(fp, "%s: %d", nome, montante-cap) */
+    fprintf(fp, "\n## Sócios com as quotas em dia ##\n");
+    /* Percorrer listas e imprimir no ficheiro
+        if montante >= cap -> fazer igual */
 }
 
 int main(void) {
@@ -237,6 +237,7 @@ int main(void) {
         printf("8 - imprimir pagamentos\n");
         printf("9 - write socios to file\n");
         printf("10 - read socios from file\n");
+        printf("11 - imprimir resultado\n");
         scanf("%d", &opcao);
         switch (opcao) {
             case 1:
@@ -270,7 +271,7 @@ int main(void) {
                 ls = read_from_file_socios();
                 break;
             case 11:
-                output()
+                output(ls, lp, 500);
             default:
                 break;
         }
