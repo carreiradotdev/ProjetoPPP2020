@@ -133,10 +133,11 @@ lista_socios menu_remove_socio(lista_socios ls) {
 
 lista_pagamentos menu_add_paga(lista_pagamentos lp){
     pagamento* p = calloc(sizeof(pagamento),1);
-    printf("Montante Pago:\n");
-    scanf("%d", p->montante);
+    printf("Montante Pago: ");
+    scanf("%d", &(p->montante));
     p->id = id++;
-    inserir_lista_paga(lp, p);
+    lp = inserir_lista_paga(lp, p);
+    return lp;
 }
 
 void menu_edit_paga(lista_pagamentos lp) {
@@ -146,10 +147,9 @@ void menu_edit_paga(lista_pagamentos lp) {
     printf("ID de sócio: ");
     scanf("%d^[\n]", &id);
     for (edit = lp; edit != NULL && edit->info_pagamento->id != id; edit = edit->next);
-    printf("\nMontante: %s\n", edit->info_pagamento->montante);
+    printf("\nMontante: %d\n", edit->info_pagamento->montante);
     printf("Novo montante: ");
-    scanf("%s^[\n]", string);
-    strcpy(edit->info_pagamento->montante, string);
+    scanf("%s^[\n]", &(edit->info_pagamento->montante));
 }
 
 /* void menu_remove_paga() {
