@@ -131,7 +131,7 @@ lista_socios menu_remove_socio(lista_socios ls) {
     return ls;
 }
 
-void menu_add_paga(){
+lista_pagamentos menu_add_paga(lista_pagamentos lp){
     pagamento* p = calloc(sizeof(pagamento),1);
     printf("Montante Pago:\n");
     scanf("%d", p->montante);
@@ -139,17 +139,18 @@ void menu_add_paga(){
     inserir_lista_paga(lp, p);
 }
 
-void menu_edit_paga(lista_pagamentos lp){
+void menu_edit_paga(lista_pagamentos lp) {
     lista_pagamentos edit;
     int id;
     char string[STRSIZE];
     printf("ID de sócio: ");
     scanf("%d^[\n]", &id);
-    for (edit = lp; edit != NULL && edit->info_pagamento->id != id;edit = edit->next);
+    for (edit = lp; edit != NULL && edit->info_pagamento->id != id; edit = edit->next);
     printf("\nMontante: %s\n", edit->info_pagamento->montante);
     printf("Novo montante: ");
     scanf("%s^[\n]", string);
     strcpy(edit->info_pagamento->montante, string);
+}
 
 /* void menu_remove_paga() {
 
@@ -182,7 +183,7 @@ int main(void) {
     lista_socios ls = NULL;
     lista_pagamentos lp = NULL;
 
-    while (opcao != 4){
+    while (opcao != 11){
         printf("1 - adicionar socio\n");
         printf("2 - editar socio\n");
         printf("3 - remover socio\n");
@@ -190,7 +191,7 @@ int main(void) {
         printf("5 - editar pagamento\n");
         printf("6 - remover pagamento\n");
         printf("7 - imprimir socio\n");
-        printf("8 - imprimir pagamentos")
+        printf("8 - imprimir pagamentos\n");
         printf("9 - write socios to file\n");
         printf("10 - read socios from file\n");
         scanf("%d", &opcao);
@@ -208,10 +209,9 @@ int main(void) {
                 lp = menu_add_paga(lp);
                 break;
             case 5:
-                menu_edit_paga();
+                menu_edit_paga(lp);
                 break;
             case 6:
-                menu_remove_paga();
                 break;
             case 7:
                 print_socios(ls);
