@@ -24,7 +24,7 @@ typedef struct pagamento{
 
 typedef struct _lista_pagamentos* lista_pagamentos;
 
-struct _lista_pagamentos{
+struct _lista_pagamentos{ // Estrutura lista de pagamentos com ponteiro para o próximo node e pagamento
     pagamento *info_pagamento;
     lista_pagamentos next;
 };
@@ -183,49 +183,23 @@ lista_pagamentos menu_remove_paga(lista_pagamentos lp) {
     return lp;
 }
 
+extern void write_to_file_socios(lista_socios lista);
 
-void write_to_file_socios(lista_socios lista){
-    FILE *f = fopen("ficheiro_in_socios", "wb");
-    while(lista != NULL){
-        fwrite(lista->info_socio, 1, sizeof(socio), f);
-        lista = lista->next;
-    }
-    fclose(f);
-}
+extern lista_socios read_from_file_socios();
 
-lista_socios read_from_file_socios() {
-    lista_socios lista = NULL;
-    FILE *f = fopen("ficheiro_in_socios", "rb");
-    socio s;
-    while (fread(&s, 1, sizeof(socio), f)){
-        socio *novo = calloc(1, sizeof(socio));
-        *novo = s;
-        lista = inserir_lista_socios(lista, novo);
-    }
-    fclose(f);
-    return lista;
-}
+extern void write_to_file_paga(lista_pagamentos lista);
 
-// cap é a quantia das quotas a serem pagas
+extern lista_pagamentos read_from_file_paga();
+
+/* cap é a quantia das quotas a serem pagas
 void output(lista_socios listasoc, lista_pagamentos listapag, int cap) {
-    printf("Qual o nome do Ficheiro de Output? ");
-    char nome[STRSIZE];
-    scanf("%s\n",nome);
-    FILE *fp = fopen(nome, "w+");
-    fprintf(fp, "## Sócios com quotas em dívida ##\n");
-    /* Percorrer listas e imprimir no ficheiro
-        if montante < cap -> procurar o nome do id e 
-        printf(fp, "%s: %d", nome, montante-cap) */
     fprintf(fp, "\n## Sócios com as quotas em dia ##\n");
     /* Percorrer listas e imprimir no ficheiro
         if montante >= cap -> fazer igual */
-}
-
 int main(void) {
     int opcao = 0;
     lista_socios ls = NULL;
     lista_pagamentos lp = NULL;
-
     while (opcao != 11){
         printf("1 - adicionar socio\n");
         printf("2 - editar socio\n");
@@ -237,7 +211,7 @@ int main(void) {
         printf("8 - imprimir pagamentos\n");
         printf("9 - write socios to file\n");
         printf("10 - read socios from file\n");
-        printf("11 - imprimir resultado\n");
+        printf("11 - imprimir txt\n");
         scanf("%d", &opcao);
         switch (opcao) {
             case 1:
@@ -266,12 +240,15 @@ int main(void) {
                 break;
             case 9:
                 write_to_file_socios(ls);
+                write_to_file_paga(lp);
                 break;
             case 10:
                 ls = read_from_file_socios();
+                lp = read_from_file_paga();
                 break;
             case 11:
-                output(ls, lp, 500);
+                // output()
+                break;
             default:
                 break;
         }
