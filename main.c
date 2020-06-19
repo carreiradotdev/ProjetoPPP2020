@@ -1,41 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "structs.h"
 
-#define STRSIZE 50
-
-typedef struct socio{
-    char nome[STRSIZE];
-    char apelido[STRSIZE];
-    int id;
-}socio;
-
-typedef struct _lista_socios* lista_socios;
-
-struct _lista_socios{
-    socio *info_socio;
-    lista_socios next;
-};
-
-typedef struct pagamento{
-    int id;
-    int montante;
-}pagamento;
-
-typedef struct _lista_pagamentos* lista_pagamentos;
-
-struct _lista_pagamentos{ // Estrutura lista de pagamentos com ponteiro para o próximo node e pagamento
-    pagamento *info_pagamento;
-    lista_pagamentos next;
-};
-
-int id = 0;
-
-void print_socios(lista_socios ls){
-    for(;ls != NULL; ls=ls->next){
-        printf("%s\t%s\t%d\n", ls->info_socio->nome, ls->info_socio->apelido, ls->info_socio->id);
-    }
-}
 
 void print_pagamentos(lista_pagamentos lp){
     for(;lp != NULL; lp=lp->next){
@@ -149,6 +113,7 @@ void menu_edit_paga(lista_pagamentos lp) {
     printf("\nMontante: %d\n", edit->info_pagamento->montante);
     printf("Novo montante: ");
     scanf("%d^[\n]", &(edit->info_pagamento->montante));
+    //TODO fgets + strtof/strtof instead
 }
 
 lista_pagamentos remove_lista_paga(lista_pagamentos lista, int id_to_remove) {
@@ -191,11 +156,22 @@ extern void write_to_file_paga(lista_pagamentos lista);
 
 extern lista_pagamentos read_from_file_paga();
 
-/* cap é a quantia das quotas a serem pagas
+// cap é a quantia das quotas a serem pagas
 void output(lista_socios listasoc, lista_pagamentos listapag, int cap) {
-    fprintf(fp, "\n## Sócios com as quotas em dia ##\n");
-    /* Percorrer listas e imprimir no ficheiro
-        if montante >= cap -> fazer igual */
+    //fprintf(fp, "\n## Sócios com as quotas em dia ##\n");
+    while(listasoc != NULL){
+        lista_pagamentos lp = listapag;
+        int soma = 0;
+        while(lp != NULL){
+            if(listasoc->info_socio->id == lp->info_pagamento->id)
+                soma += lp->info_pagamento->montante;
+            lp = lp->next;
+        }
+        //print para ficheiro de quanto pagou/desvio
+
+        listasoc = listasoc->next;
+    }
+}
 int main(void) {
     int opcao = 0;
     lista_socios ls = NULL;
