@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include "structs.h"
 
 lista_socios read_from_file_socios() {
     lista_socios lista = NULL;
@@ -36,9 +37,9 @@ lista_pagamentos read_from_file_paga() {
     lista_pagamentos lista = NULL;
     FILE *f = fopen("ficheiro_in_paga", "rb");
     pagamento p;
-    while (fread(&s, 1, sizeof(pagamento), f)){
+    while (fread(&p, 1, sizeof(pagamento), f)){
         pagamento *novo = calloc(1, sizeof(pagamento));
-        *novo = s;
+        *novo = p;
         lista = inserir_lista_paga(lista, novo);
     }
     fclose(f);
