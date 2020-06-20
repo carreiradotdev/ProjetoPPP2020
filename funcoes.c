@@ -13,20 +13,21 @@ void print_pagamentos(lista_pagamentos lp){
     }
 }
 
-//lista_socios inserir_lista_socios(struct _lista_socios** header, lista_socios lista, socio* s){
-//    lista_socios inicio = lista;
-//    lista_socios novo_no = calloc(sizeof(struct _lista_socios), 1);
-//    novo_no->info_socio = s;
-//    if(lista == NULL){ // Está vazia
-//        return novo_no;
-//    }else{
-//        while (lista->next != inicio) lista = lista->next;
-//        novo_no->next=inicio;
-//        return lista;
-//    }
-//}
-
 lista_socios inserir_lista_socios(lista_socios lista, socio* s){
+    lista_socios novo_no = calloc(sizeof(struct _lista_socios), 1);
+    novo_no->info_socio = s;
+    if(lista == NULL){
+        novo_no->next = novo_no;
+        return novo_no;
+    }else{
+        lista_socios aux = lista->next;
+        lista->next = novo_no;
+        novo_no->next = aux;
+    }
+    return novo_no;
+}
+
+/*lista_socios inserir_lista_socios(lista_socios lista, socio* s){
     lista_socios inicio = lista; // isto devolve cabeça?
     lista_socios novo_no = calloc(sizeof(struct _lista_socios), 1);
     novo_no->info_socio = s;
@@ -38,7 +39,7 @@ lista_socios inserir_lista_socios(lista_socios lista, socio* s){
         lista->next = novo_no;
         return inicio;
     }
-}
+}*/
 
 lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p){
     lista_pagamentos inicio = lista;
