@@ -9,10 +9,12 @@
 #include <string.h>
 
 #define STRSIZE 50
+#define QUOTA 50
 typedef struct socio{
     char nome[STRSIZE];
     char apelido[STRSIZE];
     int id;
+    int saldo;
 }socio;
 
 typedef struct _lista_socios* lista_socios;
@@ -65,5 +67,7 @@ lista_socios read_from_file_socios();
 void write_to_file_paga(lista_pagamentos lista);
 
 lista_pagamentos read_from_file_paga();
+
+void output(lista_socios listasoc, lista_pagamentos listapag);
 
 #endif //PPPCARREIRA_STRUCTS_H

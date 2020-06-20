@@ -13,8 +13,21 @@ void print_pagamentos(lista_pagamentos lp){
     }
 }
 
+//lista_socios inserir_lista_socios(struct _lista_socios** header, lista_socios lista, socio* s){
+//    lista_socios inicio = lista;
+//    lista_socios novo_no = calloc(sizeof(struct _lista_socios), 1);
+//    novo_no->info_socio = s;
+//    if(lista == NULL){ // Está vazia
+//        return novo_no;
+//    }else{
+//        while (lista->next != inicio) lista = lista->next;
+//        novo_no->next=inicio;
+//        return lista;
+//    }
+//}
+
 lista_socios inserir_lista_socios(lista_socios lista, socio* s){
-    lista_socios inicio = lista;
+    lista_socios inicio = lista; // isto devolve cabeça?
     lista_socios novo_no = calloc(sizeof(struct _lista_socios), 1);
     novo_no->info_socio = s;
     if(lista == NULL){
@@ -31,10 +44,10 @@ lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p){
     lista_pagamentos inicio = lista;
     lista_pagamentos novo_no = calloc(sizeof(struct _lista_pagamentos), 1);
     novo_no->info_pagamento = p;
-    if(lista == NULL){
+    if(lista == NULL){ // Está vazia
         return novo_no;
     }else{
-        while(lista->next != NULL)
+        while(lista->next != NULL) // Não está vazia e por isso continua até ao último elemento.
             lista = lista->next;
         lista->next = novo_no;
         return inicio;
@@ -44,14 +57,14 @@ lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p){
 lista_socios remove_lista_socios(lista_socios lista, int id_to_remove){
     lista_socios inicio = lista;
     lista_socios seguinte;
-    //remover primeiro no
+    //remover primeiro nó
     if(lista != NULL && lista->info_socio->id == id_to_remove){
         seguinte = lista->next;
         free(lista->info_socio);
         free(lista);
         return seguinte;
     }
-    //remover outro no
+    //remover outro nó
     while(lista->next != NULL && lista->next->info_socio->id != id_to_remove){
         lista = lista->next;
     }
@@ -137,7 +150,7 @@ lista_pagamentos remove_lista_paga(lista_pagamentos lista, int id_to_remove) {
         lista = lista->next;
     }
     if(lista->next == NULL){
-        fprintf(stderr, "Id nao encontrado\n");
+        fprintf(stderr, "ID NÃO ENCONTRADO\n");
     }else{
         seguinte = lista->next->next;
         free(lista->next->info_pagamento);
@@ -155,18 +168,25 @@ lista_pagamentos menu_remove_paga(lista_pagamentos lp) {
     return lp;
 }
 
-void output(lista_socios listasoc, lista_pagamentos listapag, int cap) {
-    //fprintf(fp, "\n## Sócios com as quotas em dia ##\n");
+void output(lista_socios listasoc, lista_pagamentos listapag) {
+    char nome[STRSIZE];
+    printf("Qual o nome desejado para o ficheiro? ");
+    scanf("%s^[\n]", nome);
+    FILE *fp = fopen(strcat(nome, ".txt"), "w+");
+    fprintf(fp, "\n## Sócios com as quotas em dia ##\n");
     while(listasoc != NULL){
         lista_pagamentos lp = listapag;
-        int soma = 0;
         while(lp != NULL){
             if(listasoc->info_socio->id == lp->info_pagamento->id)
-                soma += lp->info_pagamento->montante;
+                listasoc->info_socio->saldo += lp->info_pagamento->montante;
             lp = lp->next;
         }
-        //print para ficheiro de quanto pagou/desvio
-
+        if (listasoc->info_socio->saldo >= QUOTA ) {
+            fprintf(fp, "%s %s # PAGO # Montante pago a mais: %d",listasoc->info_socio->nome, listasoc->info_socio->apelido, (listasoc->info_socio->saldo - QUOTA));
+        } else {
+            fprintf(fp, "%s %s # POR PAGAR # Dívida: %d",listasoc->info_socio->nome, listasoc->info_socio->apelido, (QUOTA - listasoc->info_socio->saldo));
+        }
         listasoc = listasoc->next;
     }
+    fclose(fp);
 }

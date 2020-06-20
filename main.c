@@ -1,8 +1,18 @@
 #include "structs.h"
+// Programa para tratamento de quotas de um clube de montanhismo
+// Francisco Manuel Bandeira Carreira (2019222462) - PPP - 2020
+
+/*
+    O programa lê dois ficheiros binários de entrada, que podem ser lidos autonomamente:
+    "ficheiro_in_paga.txt": Ficheiro de texto com dois parametros (Montante pago e ID associado a cada transação de dinheiro.).
+    "ficheiro_in_socios.txt": Ficheiro de texto com três parametros (nome próprio, apelido e ID generado para efeitos de catalogação).
+
+    O programa escreve os dados tratados num ficheiro de texto com nome pedido ao utilizador.
+*/
 
 int main(void) {
     int opcao = 0; // inicialização do int opcao
-    lista_socios ls = NULL; // primeiro elemento da lista
+    lista_socios ls = NULL;
     lista_pagamentos lp = NULL; // primeiro elemento da lista
     while (opcao != 11){
         printf("1 - adicionar socio\n");
@@ -51,7 +61,7 @@ int main(void) {
                 lp = read_from_file_paga(); //structs.h
                 break;
             case 11:
-                // output()
+                output(ls, lp);
                 break;
             default:
                 break;
