@@ -2,9 +2,12 @@
 static int id = 0;
 
 void print_socios(lista_socios ls){
-    for(;ls != NULL; ls=ls->next){
+    lista_socios aux = ls;
+    if(aux == NULL) return;
+    do{
         printf("%s\t%s\t%d\n", ls->info_socio->nome, ls->info_socio->apelido, ls->info_socio->id);
-    }
+        ls = ls->next;
+    }while(aux != ls);
 }
 
 void print_pagamentos(lista_pagamentos lp){
@@ -50,7 +53,7 @@ lista_socios remove_lista_socios(lista_socios lista, int id_to_remove) {
         return NULL;
     }
     do{// percorrer lista ate voltar ao inicial
-        if(lista->next->info_socio->id != id_to_remove){//se encontrar no a remover (->next) por o atual a apontar para 2 nos a frente
+        if(lista->next->info_socio->id == id_to_remove){//se encontrar no a remover (->next) por o atual a apontar para 2 nos a frente
             aux = lista->next->next;
             free(lista->next);
             lista->next = aux;
@@ -91,7 +94,8 @@ void menu_edit_socio(lista_socios ls){
 lista_socios menu_remove_socio(lista_socios ls) {
     int id;
     printf("id :");
-    scanf("%d\n",&id);
+    scanf("%d",&id);
+    getchar();//limpar \n
     ls = remove_lista_socios(ls, id);
     return ls;
 }
