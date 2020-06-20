@@ -42,32 +42,24 @@ lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p){
 }
 
 lista_socios remove_lista_socios(lista_socios lista, int id_to_remove) {
-/*
-    int i = 0;
-    lista_socios aux = lista;
-    lista_socios seguinte;
-    //remover primeiro nó
-    if((lista != aux || i++ == 0) && lista->info_socio->id == id_to_remove){
-        seguinte = lista->next;
-        free(lista->info_socio);
+    lista_socios inicial = lista;
+    lista_socios aux;
+    if(lista == NULL) return NULL;//se lista vazia
+    if(lista == lista->next && lista->info_socio->id == id_to_remove){//se lista apenas tem um elemento e ele deve ser removido
         free(lista);
-        return seguinte;
+        return NULL;
     }
-    //remover outro nó
-    while(lista->next != aux && lista->next->info_socio->id != id_to_remove){
+    do{// percorrer lista ate voltar ao inicial
+        if(lista->next->info_socio->id != id_to_remove){//se encontrar no a remover (->next) por o atual a apontar para 2 nos a frente
+            aux = lista->next->next;
+            free(lista->next);
+            lista->next = aux;
+            return lista; // ou aux, qualquer no serve
+        }
         lista = lista->next;
-    }
-    if(lista->next == aux){
-        fprintf(stderr, "Id nao encontrado\n");
-    }else{
-        seguinte = lista->next->next;
-        free(lista->next->info_socio);
-        free(lista->next);
-        lista->next = seguinte;
-    }
+    }while(lista != inicial);
     return lista;
 }
-*/
 
 lista_socios menu_add_socio(lista_socios ls){
     socio* s = calloc(sizeof(socio),1);
