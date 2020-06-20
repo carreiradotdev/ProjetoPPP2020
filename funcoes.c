@@ -24,22 +24,8 @@ lista_socios inserir_lista_socios(lista_socios lista, socio* s){
         lista->next = novo_no;
         novo_no->next = aux;
     }
-    return novo_no;
+    return novo_no; // transformar merdas para procurar para funcionar com a lista circular caralhooooooo
 }
-
-/*lista_socios inserir_lista_socios(lista_socios lista, socio* s){
-    lista_socios inicio = lista; // isto devolve cabeça?
-    lista_socios novo_no = calloc(sizeof(struct _lista_socios), 1);
-    novo_no->info_socio = s;
-    if(lista == NULL){
-        return novo_no;
-    }else{
-        while(lista->next != NULL)
-            lista = lista->next;
-        lista->next = novo_no;
-        return inicio;
-    }
-}*/
 
 lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p){
     lista_pagamentos inicio = lista;
