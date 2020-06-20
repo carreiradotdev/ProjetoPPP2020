@@ -76,12 +76,19 @@ lista_socios menu_add_socio(lista_socios ls){
 }
 
 void menu_edit_socio(lista_socios ls){
-    lista_socios edit;
+    lista_socios edit = ls;
     int id;
     char string[STRSIZE];
     printf("ID de sócio: ");
     scanf("%d^[\n]", &id);
-    for (edit = ls; edit != NULL && edit->info_socio->id != id;edit = edit->next);
+    do{
+        if(edit->info_socio->id == id) break;
+        edit = edit->next;
+    }while(edit != ls);
+    if(edit->info_socio->id != id){
+        printf("not found\n");
+        return;
+    }
     printf("\nNome: %s\nApelido: %s\n", edit->info_socio->nome, edit->info_socio->apelido);
     printf("Novo nome: ");
     scanf("%s^[\n]", string);
