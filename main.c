@@ -13,8 +13,6 @@
 //TODO: ver scanfs, pedir ao miranda ajuda na leitura e escrita de ficheiros binários
 int main(void) {
     int opcao = 0; // inicialização do int opcao
-    lista_socios ls = NULL;
-    lista_pagamentos lp = NULL; // inicialização das listas como estando vazias
     while (opcao != 11){
         printf("1 - Adicionar Sócio.\n");
         printf("2 - Editar Sócio.\n");
@@ -30,39 +28,39 @@ int main(void) {
         scanf("%d", &opcao);
         switch (opcao) {
             case 1:
-                ls = menu_add_socio(ls); //funcoes.c
+                menu_add_socio(); //funcoes.c
                 break;
             case 2:
-                menu_edit_socio(ls); //funcoes.c
+                menu_edit_socio(); //funcoes.c
                 break;
             case 3:
-                ls = menu_remove_socio(ls); //funcoes.c
+                menu_remove_socio(); //funcoes.c
                 break;
             case 4:
-                lp = menu_add_paga(lp); //funcoes.c
+                menu_add_paga(); //funcoes.c
                 break;
             case 5:
-                menu_edit_paga(lp); //funcoes.c
+                menu_edit_paga(); //funcoes.c
                 break;
             case 6:
-                lp = menu_remove_paga(lp); //funcoes.c
+                menu_remove_paga(); //funcoes.c
                 break;
             case 7:
-                print_socios(ls); //funcoes.c
+                print_socios(); //funcoes.c
                 break;
             case 8:
-                print_pagamentos(lp); //funcoes.c
+                print_pagamentos(); //funcoes.c
                 break;
             case 9:
-                write_to_file_socios(ls); //funcoes.c
-                write_to_file_paga(lp); //funcoes.c
+                write_to_file_socios(); //funcoes.c
+                write_to_file_paga(); //funcoes.c
                 break;
             case 10:
-                ls = read_from_file_socios(); //funcoes.c
-                lp = read_from_file_paga(); //funcoes.c
+                read_from_file_socios(); //funcoes.c
+                read_from_file_paga(); //funcoes.c
                 break;
             case 11:
-                output(ls, lp); //funcoes.c
+                output(); //funcoes.c
                 break;
             default:
                 break;

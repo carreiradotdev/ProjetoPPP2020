@@ -1,61 +1,65 @@
 #include "structs.h"
 
 static int id = 0;
+lista_socios ls = NULL;
+lista_pagamentos lp = NULL; // inicialização das listas como estando vazias
 
-void print_socios(lista_socios ls) {
+void print_socios() {
     lista_socios aux = ls;
     if (aux == NULL) return;
     do {
-        printf("%s\t%s\t%d\n", ls->info_socio->nome, ls->info_socio->apelido, ls->info_socio->id);
-        ls = ls->next;
+        printf("%s\t%s\t%d\n", aux->info_socio->nome, aux->info_socio->apelido, aux->info_socio->id);
+        aux = aux->next;
     } while (aux != ls);
 }
 
-void print_pagamentos(lista_pagamentos lp) {
+void print_pagamentos() {
     lista_pagamentos aux = lp;
     if (aux == NULL) return;
     do {
-        printf("%d\t%d\n", lp->info_pagamento->montante, lp->info_pagamento->id);
-        lp = lp->next;
+        printf("%d\t%d\n", aux->info_pagamento->montante, aux->info_pagamento->id);
+        aux = aux->next;
     } while (aux != lp);
 }
 
-lista_socios inserir_lista_socios(lista_socios lista, socio *s) {
+void inserir_lista_socios(socio *s) {
+    lista_socios lista = ls;
     lista_socios novo_no = calloc(sizeof(struct _lista_socios), 1);
     novo_no->info_socio = s;
     if (lista == NULL) {
         novo_no->next = novo_no;
-        return novo_no;
     } else {
         lista_socios aux = lista->next;
         lista->next = novo_no;
         novo_no->next = aux;
     }
-    return novo_no; // transformar merdas para procurar para funcionar com a lista circular caralhooooooo
+    ls = novo_no;
 }
 
-lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento *p) {
+void inserir_lista_paga(pagamento *p) {
+    lista_pagamentos lista = lp;
     lista_pagamentos novo_no = calloc(sizeof(struct _lista_pagamentos), 1);
     novo_no->info_pagamento = p;
     if (lista == NULL) {
         novo_no->next = novo_no;
-        return novo_no;
     } else {
         lista_pagamentos aux = lista->next;
         lista->next = novo_no;
         novo_no->next = aux;
     }
-    return novo_no;
+    lp = novo_no;
 }
 
-lista_socios remove_lista_socios(lista_socios lista, int id_to_remove) {
+void remove_lista_socios(int id_to_remove) {
+    lista_socios lista = ls;
     lista_socios inicial = lista;
     lista_socios aux;
-    if (lista == NULL) return NULL;//se lista vazia
+    if (lista == NULL) return;//se lista vazia
     if (lista == lista->next &&
         lista->info_socio->id == id_to_remove) {//se lista apenas tem um elemento e ele deve ser removido
         free(lista);
-        return NULL;
+        ls = NULL;
+        return;
     }
     do {// percorrer lista ate voltar ao inicial
         if (lista->next->info_socio->id ==
@@ -63,25 +67,24 @@ lista_socios remove_lista_socios(lista_socios lista, int id_to_remove) {
             aux = lista->next->next;
             free(lista->next);
             lista->next = aux;
-            return lista; // ou aux, qualquer no serve
+            ls = aux;
+            return;
         }
         lista = lista->next;
     } while (lista != inicial);
-    return lista;
 }
 
-lista_socios menu_add_socio(lista_socios ls) {
+void menu_add_socio() {
     socio *s = calloc(sizeof(socio), 1);
     printf("nome:\n");
     scanf("%s", s->nome);
     printf("apelido:\n");
     scanf("%s", s->apelido);
     s->id = id++;
-    ls = inserir_lista_socios(ls, s);
-    return ls;
+    inserir_lista_socios(s);
 }
 
-void menu_edit_socio(lista_socios ls) {
+void menu_edit_socio() {
     lista_socios edit = ls;
     int id;
     char string[STRSIZE];
@@ -104,26 +107,25 @@ void menu_edit_socio(lista_socios ls) {
     strcpy(edit->info_socio->apelido, string);
 }
 
-lista_socios menu_remove_socio(lista_socios ls) {
+void menu_remove_socio() {
     int id;
     printf("id :");
     scanf("%d", &id);
     getchar();//limpar \n
-    ls = remove_lista_socios(ls, id);
-    return ls;
+    remove_lista_socios(id);
 }
 
-lista_pagamentos menu_add_paga(lista_pagamentos lp) {
+lista_pagamentos menu_add_paga() {
     pagamento *p = calloc(sizeof(pagamento), 1);
     printf("Montante Pago: ");
     scanf("%d", &(p->montante));
     printf("ID do sócio: ");
     scanf("%d", &(p->id));
-    lp = inserir_lista_paga(lp, p);
+    inserir_lista_paga(p);
     return lp;
 }
 
-void menu_edit_paga(lista_pagamentos lp) {
+void menu_edit_paga() {
     lista_pagamentos edit = lp;
     int valor;
     printf("ID de sócio: ");
@@ -139,17 +141,19 @@ void menu_edit_paga(lista_pagamentos lp) {
     printf("\nMontante: %d\n", edit->info_pagamento->montante);
     printf("Novo Montante: ");
     scanf("%s^[\n]", valor);
-    strcpy(edit->info_pagamento->montante, valor);
+    edit->info_pagamento->montante = valor; //estava strcpy aqui
 }
 
-lista_pagamentos remove_lista_paga(lista_pagamentos lista, int id_to_remove) {
+void remove_lista_paga(int id_to_remove) {
+    lista_pagamentos lista = lp;
     lista_pagamentos inicial = lista;
     lista_pagamentos aux;
-    if (lista == NULL) return NULL;//se lista vazia
+    if (lista == NULL) return;//se lista vazia
     if (lista == lista->next &&
         lista->info_pagamento->id == id_to_remove) {//se lista apenas tem um elemento e ele deve ser removido
         free(lista);
-        return NULL;
+        lp = NULL;
+        return;
     }
     do {// percorrer lista ate voltar ao inicial
         if (lista->next->info_pagamento->id ==
@@ -157,42 +161,85 @@ lista_pagamentos remove_lista_paga(lista_pagamentos lista, int id_to_remove) {
             aux = lista->next->next;
             free(lista->next);
             lista->next = aux;
-            return lista; // ou aux, qualquer no serve
+            lp = aux;
+            return;
         }
         lista = lista->next;
     } while (lista != inicial);
-    return lista;
 }
-lista_pagamentos menu_remove_paga(lista_pagamentos lp) {
+
+void menu_remove_paga() {
     int id;
     printf("Insere o ID que pretendes pagar: ");
     scanf("%d^[\n]", &id);
-    lp = remove_lista_paga(lp, id);
-    return lp;
+    remove_lista_paga(id);
 }
 
-void output(lista_socios listasoc, lista_pagamentos listapag) {
+void output() {
+    lista_pagamentos listapag = lp;
     char nome[STRSIZE];
     printf("Qual o nome desejado para o ficheiro? ");
     scanf("%s^[\n]", nome);
     FILE *fp = fopen(strcat(nome, ".txt"), "w");
     fprintf(fp, "\n## Sócios com as quotas em dia ##\n");
-    lista_socios aux_soc = listasoc;
+    lista_socios aux_soc = ls;
     do {
-        lista_pagamentos lp = listapag;
+        lista_pagamentos lp_aux = listapag;
         do {
-            if (listasoc->info_socio->id == lp->info_pagamento->id)
-                listasoc->info_socio->saldo += lp->info_pagamento->montante;
-            lp = lp->next;
-        } while (lp != listapag);
-        if (listasoc->info_socio->saldo >= QUOTA) {
-            fprintf(fp, "%d # %s %s # PAGO # Montante pago a mais: %d\n", listasoc->info_socio->id, listasoc->info_socio->nome,
-                    listasoc->info_socio->apelido, (listasoc->info_socio->saldo - QUOTA));
+            if (ls->info_socio->id == lp_aux->info_pagamento->id)
+                ls->info_socio->saldo += lp_aux->info_pagamento->montante;
+            lp_aux = lp_aux->next;
+        } while (lp_aux != listapag);
+        if (ls->info_socio->saldo >= QUOTA) {
+            fprintf(fp, "%d # %s %s # PAGO # Montante pago a mais: %d\n", ls->info_socio->id, ls->info_socio->nome, ls->info_socio->apelido, (ls->info_socio->saldo - QUOTA));
         } else {
-            fprintf(fp, "%d # %s %s # POR PAGAR # Dívida: %d\n", listasoc->info_socio->id, listasoc->info_socio->nome, listasoc->info_socio->apelido,
-                    (QUOTA - (listasoc->info_socio->saldo)));
+            fprintf(fp, "%d # %s %s # POR PAGAR # Dívida: %d\n", ls->info_socio->id, ls->info_socio->nome, ls->info_socio->apelido, (QUOTA - (ls->info_socio->saldo)));
         }
-        listasoc = listasoc->next;
-    } while (listasoc != aux_soc);
+        ls = ls->next;
+    } while (ls != aux_soc);
     fclose(fp);
+}
+
+
+void read_from_file_socios() {
+    FILE *f = fopen("ficheiro_in_socios", "rb");
+    socio s;
+    while (fread(&s, 1, sizeof(socio), f)){
+        socio *novo = calloc(1, sizeof(socio));
+        *novo = s;
+        inserir_lista_socios(novo);
+    }
+    fclose(f);
+}
+
+void write_to_file_socios() {
+    lista_socios lista = ls;
+    FILE *f = fopen("ficheiro_in_socios", "wb");
+    do{
+        fwrite(lista->info_socio, 1, sizeof(socio), f);
+        lista = lista->next;
+    }while(lista != ls);
+    fclose(f);
+}
+
+void write_to_file_paga() {
+    lista_pagamentos lista = lp;
+    FILE *f = fopen("ficheiro_in_paga", "wb");
+    do{
+        fwrite(lista->info_pagamento, 1, sizeof(pagamento), f);
+        lista = lista->next;
+    }while(lista != lp);
+    fclose(f);
+}
+
+void read_from_file_paga() {
+    lista_pagamentos lista = NULL;
+    FILE *f = fopen("ficheiro_in_paga", "rb");
+    pagamento p;
+    while (fread(&p, 1, sizeof(pagamento), f)){
+        pagamento *novo = calloc(1, sizeof(pagamento));
+        *novo = p;
+        inserir_lista_paga(novo);
+    }
+    fclose(f);
 }

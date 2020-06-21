@@ -36,38 +36,38 @@ struct _lista_pagamentos{ // Estrutura lista de pagamentos com ponteiro para o p
     lista_pagamentos next;
 };
 
-void print_socios(lista_socios ls);
+void print_socios();
 
-void print_pagamentos(lista_pagamentos lp);
+void print_pagamentos();
 
-lista_socios inserir_lista_socios(lista_socios lista, socio* s);
+void inserir_lista_socios(socio *s);
 
-lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento* p);
+void inserir_lista_paga(pagamento *p);
 
-lista_socios remove_lista_socios(lista_socios lista, int id_to_remove);
+void remove_lista_socios(int id_to_remove);
 
-lista_socios menu_add_socio(lista_socios ls);
+void menu_add_socio();
 
-void menu_edit_socio(lista_socios ls);
+void menu_edit_socio();
 
-lista_socios menu_remove_socio(lista_socios ls);
+void menu_remove_socio();
 
-lista_pagamentos menu_add_paga(lista_pagamentos lp);
+lista_pagamentos menu_add_paga();
 
-void menu_edit_paga(lista_pagamentos lp);
+void menu_edit_paga();
 
-lista_pagamentos remove_lista_paga(lista_pagamentos lista, int id_to_remove);
+void remove_lista_paga(int id_to_remove);
 
-lista_pagamentos menu_remove_paga(lista_pagamentos lp);
+void menu_remove_paga();
 
-void write_to_file_socios(lista_socios lista);
+void write_to_file_socios();
 
-lista_socios read_from_file_socios();
+void read_from_file_socios();
 
-void write_to_file_paga(lista_pagamentos lista);
+void write_to_file_paga();
 
-lista_pagamentos read_from_file_paga();
+void read_from_file_paga();
 
-void output(lista_socios listasoc, lista_pagamentos listapag);
+void output();
 
 #endif //PPPCARREIRA_STRUCTS_H
