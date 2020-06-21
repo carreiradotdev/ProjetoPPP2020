@@ -12,9 +12,12 @@ void print_socios(lista_socios ls) {
 }
 
 void print_pagamentos(lista_pagamentos lp) {
-    for (; lp != NULL; lp = lp->next) {
+    lista_pagamentos aux = lp;
+    if (aux == NULL) return;
+    do {
         printf("%d\t%d\n", lp->info_pagamento->montante, lp->info_pagamento->id);
-    }
+        lp = lp->next;
+    } while (aux != lp);
 }
 
 lista_socios inserir_lista_socios(lista_socios lista, socio *s) {
@@ -32,17 +35,17 @@ lista_socios inserir_lista_socios(lista_socios lista, socio *s) {
 }
 
 lista_pagamentos inserir_lista_paga(lista_pagamentos lista, pagamento *p) {
-    lista_pagamentos inicio = lista;
     lista_pagamentos novo_no = calloc(sizeof(struct _lista_pagamentos), 1);
     novo_no->info_pagamento = p;
-    if (lista == NULL) { // Está vazia
+    if (lista == NULL) {
+        novo_no->next = novo_no;
         return novo_no;
     } else {
-        while (lista->next != NULL) // Não está vazia e por isso continua até ao último elemento.
-            lista = lista->next;
+        lista_pagamentos aux = lista->next;
         lista->next = novo_no;
-        return inicio;
+        novo_no->next = aux;
     }
+    return novo_no;
 }
 
 lista_socios remove_lista_socios(lista_socios lista, int id_to_remove) {
@@ -121,43 +124,48 @@ lista_pagamentos menu_add_paga(lista_pagamentos lp) {
 }
 
 void menu_edit_paga(lista_pagamentos lp) {
-    lista_pagamentos edit;
-    int id;
+    lista_pagamentos edit = lp;
+    int valor;
     printf("ID de sócio: ");
     scanf("%d^[\n]", &id);
-    for (edit = lp; edit != NULL && edit->info_pagamento->id != id; edit = edit->next);
+    do {
+        if (edit->info_pagamento->id == id) break;
+        edit = edit->next;
+    } while (edit != lp);
+    if (edit->info_pagamento->id != id) {
+        printf("ID não encontrado.\n");
+        return;
+    }
     printf("\nMontante: %d\n", edit->info_pagamento->montante);
-    printf("Novo montante: ");
-    scanf("%d^[\n]", &(edit->info_pagamento->montante));
+    printf("Novo Montante: ");
+    scanf("%s^[\n]", valor);
+    strcpy(edit->info_pagamento->montante, valor);
 }
 
 lista_pagamentos remove_lista_paga(lista_pagamentos lista, int id_to_remove) {
-    lista_pagamentos inicio = lista;
-    lista_pagamentos seguinte;
-    //remover primeiro no
-    if (lista != NULL && lista->info_pagamento->id == id_to_remove) {
-        seguinte = lista->next;
-        free(lista->info_pagamento);
+    lista_pagamentos inicial = lista;
+    lista_pagamentos aux;
+    if (lista == NULL) return NULL;//se lista vazia
+    if (lista == lista->next &&
+        lista->info_pagamento->id == id_to_remove) {//se lista apenas tem um elemento e ele deve ser removido
         free(lista);
-        return seguinte;
+        return NULL;
     }
-    while (lista->next != NULL && lista->next->info_pagamento->id != id_to_remove) {
+    do {// percorrer lista ate voltar ao inicial
+        if (lista->next->info_pagamento->id ==
+            id_to_remove) {//se encontrar no a remover (->next) por o atual a apontar para 2 nos a frente
+            aux = lista->next->next;
+            free(lista->next);
+            lista->next = aux;
+            return lista; // ou aux, qualquer no serve
+        }
         lista = lista->next;
-    }
-    if (lista->next == NULL) {
-        fprintf(stderr, "ID NÃO ENCONTRADO\n");
-    } else {
-        seguinte = lista->next->next;
-        free(lista->next->info_pagamento);
-        free(lista->next);
-        lista->next = seguinte;
-    }
-    return inicio;
+    } while (lista != inicial);
+    return lista;
 }
-
 lista_pagamentos menu_remove_paga(lista_pagamentos lp) {
     int id;
-    printf("id :");
+    printf("Insere o ID que pretendes pagar: ");
     scanf("%d^[\n]", &id);
     lp = remove_lista_paga(lp, id);
     return lp;
@@ -178,15 +186,13 @@ void output(lista_socios listasoc, lista_pagamentos listapag) {
             lp = lp->next;
         } while (lp != listapag);
         if (listasoc->info_socio->saldo >= QUOTA) {
-            fprintf(fp, "%s %s # PAGO # Montante pago a mais: %d", listasoc->info_socio->nome,
+            fprintf(fp, "%d # %s %s # PAGO # Montante pago a mais: %d\n", listasoc->info_socio->id, listasoc->info_socio->nome,
                     listasoc->info_socio->apelido, (listasoc->info_socio->saldo - QUOTA));
         } else {
-            fprintf(fp, "%s %s # POR PAGAR # Dívida: %d", listasoc->info_socio->nome, listasoc->info_socio->apelido,
+            fprintf(fp, "%d # %s %s # POR PAGAR # Dívida: %d\n", listasoc->info_socio->id, listasoc->info_socio->nome, listasoc->info_socio->apelido,
                     (QUOTA - (listasoc->info_socio->saldo)));
         }
         listasoc = listasoc->next;
     } while (listasoc != aux_soc);
     fclose(fp);
 }
-
-// this mf work

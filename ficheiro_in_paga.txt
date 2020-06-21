@@ -1,0 +1,202 @@
+1
+50
+1
+43
+1
+67
+1
+86
+1
+89
+1
+09
+1
+89
+23
+Fábio Vaqueiro
+34
+Gabriel Rodrigues
+45
+Francisco Carreira
+50
+Cassiano Cigano
+578
+Eva Filipe
+58
+Daniel Guerreiro
+54
+Alejandro Monteiro
+699
+Anibal Rodrigues
+63
+Francisco Miranda
+25
+João Sousa
+74
+Rodrigo Machado
+25
+Ana Marques
+36
+Gonçalo Folhas
+96
+José Gonçalves
+85
+Gonçalo Folhas
+74
+Guilherme Junqueira
+36
+Guillos Mamilos
+25
+Fábio Vaqueiro
+85
+Daniel Roque
+1
+Thomas Fresco
+1
+Nuno Duarte
+1
+Gabriel Rodrigues
+1
+João Catré
+1
+Luís Santos
+1
+Tiago Ventura
+1
+Bárbara Gonçalves
+1
+Fernando Santos
+1
+Rui Bernardo
+1
+Filipe Pinheiro
+1
+Pedro Duarte
+1
+Sofia Meireles
+1
+Duarte Meneses
+1
+Sancho Simões
+1
+João Silva
+1
+Marta Santos
+1
+Ricardo Vieira
+1
+Sofia Botelho
+1
+Tiago Oliveira
+1
+Lúis Jordão
+1
+Telmo Korreia
+1
+Diogo Flórido
+1
+Tatiana Almeida
+1
+Patrícia Costa
+1
+Bruno Faria
+1
+Pedro Mendes
+1
+Abdellahi Brahim
+1
+Dylan Perdigão
+1
+António Pedro
+1
+Fábio Marques
+1
+Vítor Oliveira
+1
+Samuel Santos
+1
+Rita Cebolais
+1
+Eva Teixeira
+1
+José Aguiar
+1
+Guilherme Almeida
+1
+Bruno Sebastião
+1
+Rui Marques
+1
+João Artur
+1
+Pedro Costa
+1
+João Lourenço
+1
+Rui Costa
+1
+Paulo Meira
+1
+Inês Marçal
+1
+Artur Ribeiro
+1
+Jonas Rua
+1
+Iago Bebiano
+1
+João Freire
+1
+Rodrigo Ferreira
+1
+Mariana Loreto
+1
+Mariana Lança
+1
+Mauro Krellmer
+1
+Eduardo Felício
+1
+Ramiro Teodósio
+1
+Pedro Farinha
+1
+Luís Ferreira
+1
+Matheus Souza
+1
+Lucas Dias
+1
+Tomás Ferreira
+1
+Ivo Fernandes
+1
+Filipe Morais
+1
+Augusto Brito
+1
+Alexandre Bernardino
+1
+Pedro Tavares
+1
+Vasco Nascimento
+1
+Alexandre Rordês
+1
+Rita Rodrigues
+1
+Matheus Bessa
+1
+Eduardo Moreira
+1
+Paulo Farto
+1
+Gonçalo Bernardo
+1
+Leila Antunes
+1
+Gonçalo Rosa
+1
+Francisco Amaral
+1
+Bruno Ferreira

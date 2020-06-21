@@ -45,3 +45,5 @@ lista_pagamentos read_from_file_paga() {
     fclose(f);
     return lista;
 }
+
+// waiting for miranda's help in this one
