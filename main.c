@@ -10,7 +10,6 @@
     O programa escreve os dados tratados num ficheiro de texto com nome pedido ao utilizador.
 */
 
-//TODO: ver scanfs, pedir ao miranda ajuda na leitura e escrita de ficheiros binários
 int main(void) {
     int opcao = 0; // inicialização do int opcao
     while (opcao != 11){

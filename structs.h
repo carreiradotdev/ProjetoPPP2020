@@ -1,6 +1,5 @@
-//
-// Created by Francisco on 02/06/2020.
-//
+// Programa para tratamento de quotas de um clube de montanhismo
+// Francisco Manuel Bandeira Carreira (2019222462) - PPP - 2020
 
 #ifndef PPPCARREIRA_STRUCTS_H
 #define PPPCARREIRA_STRUCTS_H
@@ -10,6 +9,7 @@
 
 #define STRSIZE 50
 #define QUOTA 50
+
 typedef struct socio{
     char nome[STRSIZE];
     char apelido[STRSIZE];
@@ -31,7 +31,7 @@ typedef struct pagamento{
 
 typedef struct _lista_pagamentos* lista_pagamentos;
 
-struct _lista_pagamentos{ // Estrutura lista de pagamentos com ponteiro para o próximo node e pagamento
+struct _lista_pagamentos{ // Estrutura lista de pagamentos com ponteiro para o próximo node e informações de pagamento.
     pagamento *info_pagamento;
     lista_pagamentos next;
 };

@@ -1,23 +1,32 @@
 #include "structs.h"
 
+// Programa para tratamento de quotas de um clube de montanhismo
+// Francisco Manuel Bandeira Carreira (2019222462) - PPP - 2020
+
 static int id = 0;
 lista_socios ls = NULL;
 lista_pagamentos lp = NULL; // inicialização das listas como estando vazias
 
 void print_socios() {
     lista_socios aux = ls;
-    if (aux == NULL) return;
+    if (aux == NULL) {
+        printf("A lista está vazia e por isso não pode ser impresso nenhum sócio.\n");
+        return;
+    }
     do {
-        printf("%s\t%s\t%d\n", aux->info_socio->nome, aux->info_socio->apelido, aux->info_socio->id);
+        printf("ID: %d  | %s %s\n", aux->info_socio->id, aux->info_socio->nome, aux->info_socio->apelido);
         aux = aux->next;
     } while (aux != ls);
 }
 
 void print_pagamentos() {
     lista_pagamentos aux = lp;
-    if (aux == NULL) return;
+    if (aux == NULL) {
+        printf("A lista está vazia e por isso não pode ser impresso nenhum pagamento.\n");
+        return;
+    }
     do {
-        printf("%d\t%d\n", aux->info_pagamento->montante, aux->info_pagamento->id);
+        printf("ID: %d | Montante Pago: %d€\n", aux->info_pagamento->id, aux->info_pagamento->montante);
         aux = aux->next;
     } while (aux != lp);
 }
@@ -141,7 +150,7 @@ void menu_edit_paga() {
     printf("\nMontante: %d\n", edit->info_pagamento->montante);
     printf("Novo Montante: ");
     scanf("%s^[\n]", valor);
-    edit->info_pagamento->montante = valor; //estava strcpy aqui
+    edit->info_pagamento->montante = valor;
 }
 
 void remove_lista_paga(int id_to_remove) {
@@ -178,7 +187,7 @@ void menu_remove_paga() {
 void output() {
     lista_pagamentos listapag = lp;
     char nome[STRSIZE];
-    printf("Qual o nome desejado para o ficheiro? ");
+    printf("Qual o nome desejado para os ficheiros? ");
     scanf("%s^[\n]", nome);
     FILE *fp = fopen(strcat(nome, ".txt"), "w");
     fprintf(fp, "\n## Sócios com as quotas em dia ##\n");
@@ -193,17 +202,19 @@ void output() {
         if (ls->info_socio->saldo >= QUOTA) {
             fprintf(fp, "%d # %s %s # PAGO # Montante pago a mais: %d\n", ls->info_socio->id, ls->info_socio->nome, ls->info_socio->apelido, (ls->info_socio->saldo - QUOTA));
         } else {
-            fprintf(fp, "%d # %s %s # POR PAGAR # Dívida: %d\n", ls->info_socio->id, ls->info_socio->nome, ls->info_socio->apelido, (QUOTA - (ls->info_socio->saldo)));
+            fprintf(fp, "%d # %s %s # POR PAGAR # Montante em Dívida: %d\n", ls->info_socio->id, ls->info_socio->nome, ls->info_socio->apelido, (QUOTA - (ls->info_socio->saldo)));
         }
         ls = ls->next;
     } while (ls != aux_soc);
     fclose(fp);
+    return;
 }
 
 
 void read_from_file_socios() {
     FILE *f = fopen("ficheiro_in_socios", "rb");
     socio s;
+    if (f == NULL) printf("O Ficheiro está vazio.");
     while (fread(&s, 1, sizeof(socio), f)){
         socio *novo = calloc(1, sizeof(socio));
         *novo = s;
@@ -215,6 +226,10 @@ void read_from_file_socios() {
 void write_to_file_socios() {
     lista_socios lista = ls;
     FILE *f = fopen("ficheiro_in_socios", "wb");
+    if (lista == ls) {
+        printf("Ficheiro guardado.\n");
+        return;
+    }
     do{
         fwrite(lista->info_socio, 1, sizeof(socio), f);
         lista = lista->next;
@@ -225,10 +240,15 @@ void write_to_file_socios() {
 void write_to_file_paga() {
     lista_pagamentos lista = lp;
     FILE *f = fopen("ficheiro_in_paga", "wb");
+    if (lista == lp) {
+        printf("Ficheiro guardado.\n");
+        return;
+    }
     do{
         fwrite(lista->info_pagamento, 1, sizeof(pagamento), f);
         lista = lista->next;
     }while(lista != lp);
+    printf("Ficheiro guardado.\n");
     fclose(f);
 }
 
@@ -236,6 +256,7 @@ void read_from_file_paga() {
     lista_pagamentos lista = NULL;
     FILE *f = fopen("ficheiro_in_paga", "rb");
     pagamento p;
+    if (f == NULL) printf("O Ficheiro está vazio.");
     while (fread(&p, 1, sizeof(pagamento), f)){
         pagamento *novo = calloc(1, sizeof(pagamento));
         *novo = p;
