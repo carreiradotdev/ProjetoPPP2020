@@ -3,9 +3,9 @@
 // Francisco Manuel Bandeira Carreira (2019222462) - PPP - 2020
 
 /*
-    O programa lê dois ficheiros binários de entrada, que podem ser lidos autonomamente:
-    "ficheiro_in_paga.txt": Ficheiro de texto com dois parametros (Montante pago e ID associado a cada transação de dinheiro.).
-    "ficheiro_in_socios.txt": Ficheiro de texto com três parametros (nome próprio, apelido e ID generado para efeitos de catalogação).
+    O programa lê e escreve dois ficheiros binários de entrada, que podem ser lidos autonomamente:
+    "ficheiro_in_paga": Ficheiro de texto com dois parametros (Montante pago e ID associado a cada transação de dinheiro.).
+    "ficheiro_in_socios": Ficheiro de texto com três parametros (nome próprio, apelido e ID generado para efeitos de catalogação).
 
     O programa escreve os dados tratados num ficheiro de texto com nome pedido ao utilizador.
 */

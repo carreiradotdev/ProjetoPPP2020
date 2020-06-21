@@ -1,54 +1,54 @@
 1
-50
+Adriana Bernardo
 1
-43
+Alexandre Brás
 1
-67
+Anderson Curva
 1
-86
-1
-89
-1
-09
-1
-89
-23
-Fábio Vaqueiro
-34
-Gabriel Rodrigues
-45
-Francisco Carreira
-50
-Cassiano Cigano
-578
-Eva Filipe
-58
-Daniel Guerreiro
-54
-Alejandro Monteiro
-699
 Anibal Rodrigues
-63
-Francisco Miranda
-25
-João Sousa
-74
-Rodrigo Machado
-25
-Ana Marques
-36
-Gonçalo Folhas
-96
-José Gonçalves
-85
-Gonçalo Folhas
-74
-Guilherme Junqueira
-36
-Guillos Mamilos
-25
+1
+Carlos Jordão
+1
+David Leitão
+1
+Esmaail Abraço
+1
 Fábio Vaqueiro
-85
+1
+Gabriel Rodrigues
+1
+Francisco Carreira
+1
+Cassiano Cigano
+1
+Eva Filipe
+1
+Daniel Guerreiro
+1
+Alejandro Monteiro
+1
+Anibal Rodrigues
+1
+Francisco Miranda
+1
+João Sousa
+1
+Rodrigo Machado
+1
+Ana Marques
+1
+Gonçalo Folhas
+1
+José Gonçalves
+1
+Frázio Bacalhau
+1
+Guilherme Junqueira
+1
+Guillos Mamilos
+1
+Fábio Vaqueiro
+1
 Daniel Roque
 1
 Thomas Fresco
